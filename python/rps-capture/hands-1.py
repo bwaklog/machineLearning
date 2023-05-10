@@ -21,6 +21,7 @@ clock = 0
 p1_move = p2_move = None
 gameText = ""
 sucess = True
+p1_score = p2_score = 0
 
 with mp_hands.Hands(model_complexity=0,
                     min_detection_confidence=0.5,
@@ -84,8 +85,15 @@ with mp_hands.Hands(model_complexity=0,
             else:
                 gameText = "Didnt play properly!"
 
+        if "P1 Wins!" in gameText:
+            p1_score += 1
+        elif "P2 Wins!" in gameText:
+            p2_score += 1
+
         cv2.putText(frame, f"Clock: {clock}", (50, 50), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 255), 2, cv2.LINE_AA)
         cv2.putText(frame, f"GameText: {gameText}", (50, 80), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 255), 2, cv2.LINE_AA)
+        cv2.putText(frame, f"P1 Score: {p1_score}", (1000, 50), cv2.FONT_HERSHEY_PLAIN, 2, (232, 87, 65), 2, cv2.LINE_AA)
+        cv2.putText(frame, f"P2 Score: {p2_score}", (1000, 80), cv2.FONT_HERSHEY_PLAIN, 2, (232, 87, 65), 2, cv2.LINE_AA)
 
         clock = (clock + 1) % 100
         
